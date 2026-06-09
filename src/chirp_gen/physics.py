@@ -1,0 +1,1 @@
+# Quadrupole inspiral equations (pure functions)
