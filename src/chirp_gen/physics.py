@@ -1,5 +1,9 @@
+from chirp_gen.constants import G, C
+import numpy as np
+
 # Quadrupole inspiral equations (pure functions)
 #these functions are used to compute the derived masses 
+
 
 def compute_derived_masses(m1_kg: float, m2_kg: float) -> dict:
     """Derive total, reduced, symmetric mass ratio, and chirp mass for a binary.
@@ -41,3 +45,14 @@ def compute_symmetric_mass_ratio(M: float, mu: float) -> float:
 def compute_chirp_mass(m1_kg: float, m2_kg: float) -> float:
     """input masses in kg and output the chirp mass in kg"""
     return ((m1_kg * m2_kg) ** (3/5)) / ((m1_kg + m2_kg) ** (1/5))
+
+#These functions are used to compute the time to merger and the frequency on the time grid
+def time_to_merger_from_frequency(f_hz: np.ndarray, m_c_kg: float) -> np.ndarray: 
+    """input frequency in Hz and chirp mass in kg and output the time to merger in seconds, negative because the time is going to merger"""
+    return -((5.0 / 256.0) * (np.pi * f_hz) ** (-8.0 / 3.0) * (G * m_c_kg / C**3) ** (-5.0 / 3.0))
+
+def frequency_on_time_grid(time_s: np.ndarray, m_c_kg: float, f_start_hz: float, f_end_hz: float) -> np.ndarray:
+    """input time in seconds, chirp mass in kg, start frequency in Hz and end frequency in Hz and output the frequency in Hz"""
+    tau = -np.asarray(time_s, dtype=float)
+    theta = G * m_c_kg / C**3
+    return (1.0 / np.pi) * ((5.0 / 256.0) / tau * theta ** (-5.0 / 3.0)) ** (3.0 / 8.0)
