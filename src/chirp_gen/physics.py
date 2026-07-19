@@ -1,6 +1,6 @@
 from chirp_gen.constants import G, C
 import numpy as np
-
+from scipy.integrate import cumulative_trapezoid
 # Quadrupole inspiral equations (pure functions)
 # These functions are used to compute the derived masses
 
@@ -114,3 +114,49 @@ def frequency_on_time_grid(
     tau = -np.asarray(time_s, dtype=float)
     theta = G * m_c_kg / C**3
     return (1.0 / np.pi) * ((5.0 / 256.0) / tau * theta ** (-5.0 / 3.0)) ** (3.0 / 8.0)
+
+def strain_amplitude(f_hz: np.ndarray, m_c_kg: float, distance_m: float) -> np.ndarray:
+    """Return the leading-order GW strain amplitude A(f).
+
+    Args:
+        f_hz: Gravitational-wave frequency in Hertz.
+        m_c_kg: Chirp mass in kilograms.
+        distance_m: Luminosity distance in meters.
+
+    Returns:
+        Dimensionless strain amplitude A.
+    """
+    return (4.0/distance_m)*((G*m_c_kg/C**2.0)**(5.0/3.0))*(((f_hz*np.pi)/C)**(2.0/3.0))
+
+def gw_phase(time_s: np.ndarray, frequency_hz: np.ndarray) -> np.ndarray:
+    """Return GW phase by integrating 2π f(t) along the time grid.
+    Convention: Φ(t0) = 0 at the first sample.
+
+    Args:
+        time_s: Time samples in seconds (merger at t = 0).
+        frequency_hz: Instantaneous GW frequency at each sample in Hertz.
+
+    Returns:
+        GW phase Φ(t) in radians.
+    """
+    integral = cumulative_trapezoid(frequency_hz, time_s, initial=0.0)
+    return (2.0 * np.pi) * integral
+    
+def strain_waveform(time_s: np.ndarray, frequency_hz: np.ndarray, m_c_kg: float, distance_m: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Assemble the time-domain GW strain h(t) = A(f) cos Φ(t).
+
+    Args:
+        time_s: Time samples in seconds (merger at t = 0).
+        frequency_hz: Instantaneous GW frequency at each sample in Hertz.
+        m_c_kg: Chirp mass in kilograms.
+        distance_m: Luminosity distance in meters.
+
+    Returns:
+        Tuple of (strain, frequency_hz, phase_rad):
+        dimensionless h(t), frequency in Hertz, phase in radians.
+    """    
+    amplitude = strain_amplitude(frequency_hz, m_c_kg, distance_m)
+    phase_rad = gw_phase(time_s, frequency_hz)
+    strain = amplitude * np.cos(phase_rad)
+    return strain, frequency_hz, phase_rad
+
