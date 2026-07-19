@@ -1,38 +1,52 @@
 # Dataclasses: BinaryParameters, WaveformResult
 from dataclasses import dataclass
 import numpy as np
-# BinaryParameters class
+
+
 @dataclass(frozen=True)
 class BinaryParameters:
-    """Physical inputs for a circular binary inspiral waveform."""
-    # Masses in solar masses
+    """Physical inputs for a circular binary inspiral waveform.
+
+    Attributes:
+        m1_msun: Primary mass in solar masses.
+        m2_msun: Secondary mass in solar masses.
+        distance_mpc: Luminosity distance in megaparsecs.
+        f_start_hz: Start frequency of the analysis band in Hertz.
+        f_end_hz: End frequency of the analysis band in Hertz.
+    """
+
     m1_msun: float
     m2_msun: float
-    # Distance in megaparsecs
     distance_mpc: float
-    # Start and end frequencies in Hertz
     f_start_hz: float
-    # End frequency in Hertz
     f_end_hz: float
 
-# WaveformConfig class
+
 @dataclass(frozen=True)
 class WaveformConfig:
-    """Numerical settings for time-domain sampling."""
-    # Sample rate in Hertz
+    """Numerical settings for time-domain sampling.
+
+    Attributes:
+        sample_rate_hz: Sample rate in Hertz.
+    """
+
     sample_rate_hz: float
 
-# WaveformResult class
+
 @dataclass
 class WaveformResult:
-    """Generated waveform arrays and run metadata."""
-    # Time in seconds
+    """Generated waveform arrays and run metadata.
+
+    Attributes:
+        time_s: Time samples in seconds (merger at t = 0).
+        strain: Dimensionless strain h(t).
+        frequency_hz: Instantaneous GW frequency in Hertz.
+        phase_rad: GW phase in radians.
+        metadata: Dictionary of run metadata about the waveform.
+    """
+
     time_s: np.ndarray
-    # Strain in dimensionless units
     strain: np.ndarray
-    # Frequency in Hertz
     frequency_hz: np.ndarray
-    # Phase in radians
     phase_rad: np.ndarray
-    # Metadata dictionary
-    metadata: dict  # Dictionary of metadata about the waveform 
+    metadata: dict
