@@ -2,6 +2,24 @@
 
 A Python library for generating synthetic gravitational-wave chirps from binary black hole inspirals using the quadrupole formula in the Newtonian limit. The goal is a small, production-ready package with both a library API and a command-line tool for producing time-domain strain waveforms.
 
+## Setup
+
+The package lives under `src/`, so install it (editable) before importing `chirp_gen` or running tests:
+
+```bash
+pip install -e ".[dev]"
+```
+
+This installs runtime dependencies (`numpy`, `scipy`) plus dev tools (`pytest`, `ruff`).
+
+### Run tests
+
+```bash
+pytest -v
+```
+
+Without the editable install, pytest fails with `ModuleNotFoundError: No module named 'chirp_gen'`.
+
 ## Project structure
 
 ```text
