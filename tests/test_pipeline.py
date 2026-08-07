@@ -1,8 +1,8 @@
+import numpy as np
 import pytest
 
 from chirp_gen.models import BinaryParameters, WaveformConfig
 from chirp_gen.pipeline import generate_waveform, validate_parameters
-import numpy as np
 
 
 @pytest.fixture

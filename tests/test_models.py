@@ -1,6 +1,6 @@
-import pytest
-from chirp_gen.models import BinaryParameters, WaveformConfig, WaveformResult
 import numpy as np
+
+from chirp_gen.models import BinaryParameters, WaveformConfig, WaveformResult
 
 
 def test_gw150914_binary_parameters_construct():

@@ -1,5 +1,6 @@
 import pytest
-from chirp_gen.constants import G, C, msun_to_kg, mpc_to_m, M_SUN
+
+from chirp_gen.constants import M_SUN, C, G, mpc_to_m, msun_to_kg
 
 
 def test_msun_to_kg_one_solar_mass():

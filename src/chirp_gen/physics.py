@@ -1,6 +1,8 @@
-from chirp_gen.constants import G, C
 import numpy as np
 from scipy.integrate import cumulative_trapezoid
+
+from chirp_gen.constants import C, G
+
 # Quadrupole inspiral equations (pure functions)
 # These functions are used to compute the derived masses
 

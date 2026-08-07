@@ -14,13 +14,13 @@ Scope (leading-order Newtonian quadrupole inspiral only):
 
 import numpy as np
 
-from chirp_gen.constants import msun_to_kg, mpc_to_m
+from chirp_gen.constants import mpc_to_m, msun_to_kg
 from chirp_gen.models import BinaryParameters, WaveformConfig, WaveformResult
 from chirp_gen.physics import (
     compute_derived_masses,
-    time_to_merger_from_frequency,
     frequency_on_time_grid,
     strain_waveform,
+    time_to_merger_from_frequency,
 )
 
 

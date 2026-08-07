@@ -1,15 +1,15 @@
+import numpy as np
 import pytest
 
-from chirp_gen.constants import M_SUN, msun_to_kg, mpc_to_m
+from chirp_gen.constants import M_SUN, mpc_to_m, msun_to_kg
 from chirp_gen.physics import (
     compute_derived_masses,
-    time_to_merger_from_frequency,
     frequency_on_time_grid,
-    strain_amplitude,
     gw_phase,
+    strain_amplitude,
     strain_waveform,
+    time_to_merger_from_frequency,
 )
-import numpy as np
 
 
 def test_compute_derived_masses_equal_masses():
