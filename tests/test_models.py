@@ -1,4 +1,3 @@
-import pytest
 from chirp_gen.models import BinaryParameters, WaveformConfig, WaveformResult
 import numpy as np
 
